@@ -32,7 +32,7 @@ initGL size@(Size w h) = do
     matrixMode $= Modelview 0
 
 resizeGLScene size@(Size w h) = do
-    viewport $= (Position 0 0, size)
+    viewport   $= (Position 0 0, size)
     matrixMode $= Projection
     loadIdentity
     let h' = if h == 0 then 1 else h
@@ -50,4 +50,18 @@ keyPressed key keyState modifiers position = do
 drawGLScene = do
     clear [ColorBuffer, DepthBuffer]
     loadIdentity
+
+    translate $ Vector3 (-1.5) 0 ((-6)::GLfloat)
+    renderPrimitive Triangles $ do
+        vertex $ Vertex3 0 1 (0::GLfloat)
+        vertex $ Vertex3 (-1) (-1) (0::GLfloat)
+        vertex $ Vertex3 1 (-1) (0::GLfloat)
+
+    translate $ Vector3 3 0 (0::GLfloat)
+    renderPrimitive Quads $ do
+        vertex $ Vertex3 (-1) 1 (0::GLfloat)
+        vertex $ Vertex3 1 1 (0::GLfloat)
+        vertex $ Vertex3 1 (-1) (0::GLfloat)
+        vertex $ Vertex3 (-1) (-1) (0::GLfloat)
+
     swapBuffers
